@@ -1,4 +1,6 @@
 - hosts: webserver
+  vars_files: 
+  - config.yml
   tasks:
     - name: Add repository for nodejs
       become: yes
@@ -7,12 +9,12 @@
         description: rpm YUM repo
         baseurl: https://rpm.nodesource.com/pub_7.x/el/6/x86_64/
         gpgcheck: no
-    - name: Install nginx and nodejs
+    - name: Install nginx and specific version of nodejs
       become: yes
       yum: name="{{item}}" state=present
       with_items:
         - nginx
-        - nodejs-7.2.0
+        - nodejs-{{node_version}}
     - name: Set the port for nginx in the conf file.
       become: yes
       copy:
@@ -24,7 +26,7 @@
         name: nginx 
         state: started 
         enabled: yes
-- hosts: webserver-2
+- hosts: devserver
   tasks:
     - name: Add repository for nodejs
       become: yes
@@ -33,7 +35,7 @@
         description: rpm YUM repo
         baseurl: https://rpm.nodesource.com/pub_7.x/el/6/x86_64/
         gpgcheck: no
-    - name: Install nodejs
+    - name: Install latest nodejs on the dev-server
       become: yes
-      yum: name=nodejs state=present
-      
+      yum: name=nodejs state=latest
+    - debug: "msg={{some_server}}" 
