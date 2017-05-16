@@ -1,0 +1,39 @@
+- hosts: webserver
+  tasks:
+    - name: Add repository for nodejs
+      become: yes
+      yum_repository:
+        name: rpm_repo_node
+        description: rpm YUM repo
+        baseurl: https://rpm.nodesource.com/pub_7.x/el/6/x86_64/
+        gpgcheck: no
+    - name: Install nginx and nodejs
+      become: yes
+      yum: name="{{item}}" state=present
+      with_items:
+        - nginx
+        - nodejs-7.2.0
+    - name: Set the port for nginx in the conf file.
+      become: yes
+      copy:
+        src: nginx.conf
+        dest: /etc/nginx/conf.d/default.conf
+    - name: Restart the Nginx
+      become: yes
+      service: 
+        name: nginx 
+        state: started 
+        enabled: yes
+- hosts: webserver-2
+  tasks:
+    - name: Add repository for nodejs
+      become: yes
+      yum_repository:
+        name: rpm_repo_node
+        description: rpm YUM repo
+        baseurl: https://rpm.nodesource.com/pub_7.x/el/6/x86_64/
+        gpgcheck: no
+    - name: Install nodejs
+      become: yes
+      yum: name=nodejs state=present
+      
