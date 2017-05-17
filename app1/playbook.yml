@@ -2,19 +2,14 @@
   vars_files: 
   - config.yml
   tasks:
-    - name: Add repository for nodejs
+    - name: role node js for webserver
+      include_role: 
+        name: nodejs
+      vars:
+        nodejs_version: 7.2.0
+    - name: Install nginx 
       become: yes
-      yum_repository:
-        name: rpm_repo_node
-        description: rpm YUM repo
-        baseurl: https://rpm.nodesource.com/pub_7.x/el/6/x86_64/
-        gpgcheck: no
-    - name: Install nginx and specific version of nodejs
-      become: yes
-      yum: name="{{item}}" state=present
-      with_items:
-        - nginx
-        - nodejs-{{node_version}}
+      yum: name="nginx" state=present
     - name: Set the port for nginx in the conf file.
       become: yes
       copy:
@@ -28,14 +23,9 @@
         enabled: yes
 - hosts: devserver
   tasks:
-    - name: Add repository for nodejs
-      become: yes
-      yum_repository:
-        name: rpm_repo_node
-        description: rpm YUM repo
-        baseurl: https://rpm.nodesource.com/pub_7.x/el/6/x86_64/
-        gpgcheck: no
-    - name: Install latest nodejs on the dev-server
-      become: yes
-      yum: name=nodejs state=latest
-    - debug: "msg={{some_server}}" 
+    - name: role node js
+      include_role: 
+        name: nodejs
+      vars:
+        nodejs_version: 7.10.0
+    - debug: "msg={{nodejs_version}}" 
