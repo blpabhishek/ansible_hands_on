@@ -1,6 +1,6 @@
 - hosts: webserver
   vars_files:
-   - config.yml
+   - config_web.yml
   tasks:
     - name: nginx
       include_role: 
@@ -8,14 +8,10 @@
     - name: role node js for webserver
       include_role: 
         name: nodejs
-      vars:
-        node_version: "{{node_version_web_server}}"
 - hosts: devserver
   vars_files:
-   - config.yml
+   - config_dev.yml
   tasks:
     - name: role node js
       include_role: 
         name: nodejs
-      vars:
-        node_version: "{{node_version_dev_server}}"
