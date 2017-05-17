@@ -5,6 +5,6 @@
     description: rpm YUM repo
     baseurl: https://rpm.nodesource.com/pub_7.x/el/6/x86_64/
     gpgcheck: no
-- name: Installing nodejs {{nodejs_version}}
+- name: Installing nodejs {{node_version}}
   become: yes
-  yum: name=nodejs-{{nodejs_version}} state=present
+  yum: name=nodejs-{{node_version}} state=present
