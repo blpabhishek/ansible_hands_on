@@ -1,17 +1,11 @@
 - hosts: webserver
   vars_files:
    - config_web.yml
-  tasks:
-    - name: nginx
-      include_role: 
-        name: nginx
-    - name: role node js for webserver
-      include_role: 
-        name: nodejs
+  roles:
+    - nginx
+    - nodejs
 - hosts: devserver
   vars_files:
    - config_dev.yml
-  tasks:
-    - name: role node js
-      include_role: 
-        name: nodejs
+  roles:
+    - nodejs
