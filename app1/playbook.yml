@@ -1,11 +1,11 @@
 - hosts: webserver
   vars_files:
-   - config_web.yml
+   - configs/config_web.yml
   roles:
     - nginx
     - nodejs
 - hosts: devserver
   vars_files:
-   - config_dev.yml
+   - configs/config_dev.yml
   roles:
     - nodejs

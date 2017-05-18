@@ -4,7 +4,7 @@
 - name: Set the port for nginx in the conf file.
   become: yes
   copy: 
-    src: /Users/abishek.gupta/Projects/devops/app1/nginx.conf
+    src: nginx.conf
     dest: /etc/nginx/conf.d/default.conf
 - name: Restart the Nginx
   become: yes
