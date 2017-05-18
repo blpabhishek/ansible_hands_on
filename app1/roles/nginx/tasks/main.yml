@@ -1,12 +1,14 @@
 - name: Install nginx 
   become: yes
   yum: name="nginx" state=present
-- name: Set the port for nginx in the conf file.
+  notify: Restart nginx
+- name: Set the port to {{nginx_port}} for nginx in the conf file.
   become: yes
-  copy: 
+  template: 
     src: nginx.conf
     dest: /etc/nginx/conf.d/default.conf
-- name: Restart the Nginx
+  notify: Restart nginx
+- name: Start Nginx
   become: yes
   service: 
     name: nginx 
