@@ -4,8 +4,20 @@
   roles:
     - nginx
     - nodejs
+  tasks:
+    - debug: 
+        var: "nginx_config_update_result"
+    - debug: 
+        var: "config_changed"
+
 - hosts: devserver
   vars_files:
    - configs/config_dev.yml
   roles:
     - nodejs
+
+  tasks:
+    - debug: 
+        var: "nginx_config_update_result"
+    - debug: 
+        var: "config_changed"

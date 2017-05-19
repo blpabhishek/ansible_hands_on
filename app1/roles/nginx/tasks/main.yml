@@ -7,8 +7,9 @@
   template: 
     src: nginx.conf
     dest: /etc/nginx/conf.d/default.conf
-  register: nginxConfigStatus
-- debug : "msg={{nginxConfigStatus}}"
+  register: nginx_config_update_result
+- set_fact: 
+    config_changed: "{{nginx_config_update_result.changed}}"
 
 - name: Start Nginx
   become: yes
@@ -21,4 +22,4 @@
   service:
     name: nginx
     state: restarted
-  when: nginxConfigStatus.changed
+  when: config_changed
