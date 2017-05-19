@@ -1,23 +1,15 @@
 - hosts: webserver
   vars_files:
    - configs/config_web.yml
-  roles:
-    - nginx
-    - nodejs
   tasks:
-    - debug: 
-        var: "nginx_config_update_result"
-    - debug: 
-        var: "config_changed"
+    - name: webserver role
+      include_role: 
+        name: webserver
 
 - hosts: devserver
   vars_files:
    - configs/config_dev.yml
-  roles:
-    - nodejs
-
   tasks:
-    - debug: 
-        var: "nginx_config_update_result"
-    - debug: 
-        var: "config_changed"
+    - name: devserver role
+      include_role: 
+        name: devserver
